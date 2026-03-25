@@ -115,7 +115,7 @@ class SpeechRecognizer {
     /// 重置静默计时器
     private func resetSilenceTimer() {
         silenceTimer?.invalidate()
-        silenceTimer = Timer.scheduledTimer(withTimeInterval: silenceTimeout, repeats: false) { [weak self] _ in
+        silenceTimer = Timer.scheduledTimer(withTimeInterval: silenceTimeout, repeats: false) { _ in
             print("[RunYu] ⏱️ 静默超时，自动停止")
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: .voiceInputShouldStop, object: nil)

@@ -29,6 +29,15 @@ struct MenuBarView: View {
                 }
                 
                 Spacer()
+                
+                // 今日统计
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("\(TranscriptionHistory.shared.todayCount) 次")
+                        .font(.caption.bold())
+                    Text("\(TranscriptionHistory.shared.todayWordCount) 字")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
             }
             .padding(16)
             
@@ -51,13 +60,22 @@ struct MenuBarView: View {
                 .tint(viewModel.isListening ? .red : .blue)
                 .controlSize(.large)
                 
-                // 快捷键提示
-                HStack {
-                    Image(systemName: "keyboard")
-                        .foregroundColor(.secondary)
-                    Text("快捷键: ⌥V")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                // 快捷键和语音指令提示
+                HStack(spacing: 16) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "keyboard")
+                            .foregroundColor(.secondary)
+                        Text("⌥V")
+                            .font(.caption.bold())
+                            .foregroundColor(.secondary)
+                    }
+                    HStack(spacing: 4) {
+                        Image(systemName: "speaker.wave.2")
+                            .foregroundColor(.secondary)
+                        Text("\"停止录入\"")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
                 // 实时转写预览

@@ -10,9 +10,22 @@
 		98242C372F739EDD00157F68 /* RunYu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunYu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		98242C852F73B89600157F68 /* Exceptions for "RunYu" folder in "RunYu" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 98242C362F739EDD00157F68 /* RunYu */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		98242C392F739EDD00157F68 /* RunYu */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				98242C852F73B89600157F68 /* Exceptions for "RunYu" folder in "RunYu" target */,
+			);
 			path = RunYu;
 			sourceTree = "<group>";
 		};

@@ -53,11 +53,33 @@ struct SettingsView: View {
                     Toggle("启用 AI 润色", isOn: $polishEnabled)
                     Toggle("自动插入到光标位置", isOn: $autoInsert)
                 }
+                
+                Section("语音指令") {
+                    HStack {
+                        Image(systemName: "speaker.wave.2")
+                            .foregroundColor(.blue)
+                        Text("说「停止录入」可语音停止输入")
+                            .font(.callout)
+                            .foregroundColor(.secondary)
+                    }
+                }
             }
             .formStyle(.grouped)
             .tabItem {
                 Label("通用", systemImage: "gear")
             }
+            
+            // 个人词典
+            DictionaryView()
+                .tabItem {
+                    Label("词典", systemImage: "character.book.closed")
+                }
+            
+            // 转写历史
+            HistoryView()
+                .tabItem {
+                    Label("历史", systemImage: "clock.arrow.circlepath")
+                }
             
             // 权限状态
             Form {
@@ -118,7 +140,7 @@ struct SettingsView: View {
                 Label("关于", systemImage: "info.circle")
             }
         }
-        .frame(minWidth: 450, minHeight: 350)
+        .frame(minWidth: 500, minHeight: 400)
     }
 }
 

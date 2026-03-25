@@ -38,9 +38,13 @@ class VoiceInputViewModel: ObservableObject {
     private let speechRecognizer = SpeechRecognizer.shared
     private let textPolisher = TextPolisher.shared
     private let textInserter = TextInserter.shared
+    private let history = TranscriptionHistory.shared
     
     private var durationTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
+    
+    /// 语音停止指令关键词
+    private let stopCommands = ["停止录入", "停止输入", "结束录入", "结束输入"]
     
     // MARK: - Init
     
@@ -160,6 +164,14 @@ class VoiceInputViewModel: ObservableObject {
         if !finalText.isEmpty {
             polishedText = textPolisher.polish(finalText)
             textInserter.insertText(polishedText)
+            
+            // 保存到历史记录
+            history.addRecord(
+                original: finalText,
+                polished: polishedText,
+                duration: duration
+            )
+            
             statusMessage = "✅ 已插入 \(polishedText.count) 字"
         } else {
             statusMessage = "未检测到语音"
@@ -179,6 +191,17 @@ class VoiceInputViewModel: ObservableObject {
     // MARK: - Handlers
     
     private func handleTranscription(text: String, isFinal: Bool) {
+        // 检测语音停止指令
+        for command in stopCommands {
+            if text.hasSuffix(command) || text.contains(command) {
+                // 去掉停止指令本身
+                currentTranscription = text.replacingOccurrences(of: command, with: "").trimmingCharacters(in: .whitespaces)
+                print("[RunYu] 🗣️ 检测到语音指令: \(command)")
+                stopVoiceInput()
+                return
+            }
+        }
+        
         currentTranscription = text
         
         if isFinal {
@@ -188,9 +211,8 @@ class VoiceInputViewModel: ObservableObject {
     
     private func handleError(_ error: Error) {
         // 忽略取消导致的错误
-        let nsError = error as NSError
-        if nsError.domain == "kAFAssistantErrorDomain" && nsError.code == 216 { return }
         if error.localizedDescription.contains("canceled") { return }
+        if (error as NSError).code == 216 { return }
         guard state == .listening else { return }
         
         print("[RunYu] ❌ 识别错误: \(error.localizedDescription)")
