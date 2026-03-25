@@ -6,27 +6,45 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct RunYuApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var viewModel = VoiceInputViewModel()
+    
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        // 菜单栏常驻图标
+        MenuBarExtra {
+            MenuBarView(viewModel: viewModel)
+        } label: {
+            Image(systemName: viewModel.isListening ? "waveform.circle.fill" : "mic.circle")
+                .symbolRenderingMode(.hierarchical)
+                .foregroundStyle(viewModel.isListening ? .green : .primary)
         }
-        .modelContainer(sharedModelContainer)
+        .menuBarExtraStyle(.window)
+        
+        // 设置窗口
+        Window("润语设置", id: "settings") {
+            SettingsView(viewModel: viewModel)
+        }
+        .defaultSize(width: 500, height: 400)
+    }
+}
+
+/// AppDelegate 处理全局热键注册和权限检查
+class AppDelegate: NSObject, NSApplicationDelegate {
+    var hotkeyManager: HotkeyManager?
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // 注册全局热键
+        hotkeyManager = HotkeyManager.shared
+        hotkeyManager?.register()
+        
+        // 请求麦克风和语音识别权限
+        PermissionManager.shared.requestAllPermissions()
+    }
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        hotkeyManager?.unregister()
     }
 }
