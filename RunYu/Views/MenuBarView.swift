@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(macOS)
 struct MenuBarView: View {
     @ObservedObject var viewModel: VoiceInputViewModel
     @Environment(\.openWindow) var openWindow
@@ -55,10 +56,11 @@ struct MenuBarView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
+                    .background(viewModel.isListening ? Color.red : Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(viewModel.isListening ? .red : .blue)
-                .controlSize(.large)
+                .buttonStyle(.plain)
                 
                 // 快捷键和语音指令提示
                 HStack(spacing: 16) {
@@ -90,7 +92,12 @@ struct MenuBarView: View {
             
             // 底部操作
             VStack(spacing: 4) {
-                Button(action: { openWindow(id: "settings") }) {
+                Button(action: {
+                    NSApp.activate(ignoringOtherApps: true)
+                    DispatchQueue.main.async {
+                        openWindow(id: "settings")
+                    }
+                }) {
                     HStack {
                         Image(systemName: "gear")
                         Text("设置")
@@ -120,3 +127,4 @@ struct MenuBarView: View {
         .frame(width: 360)
     }
 }
+#endif

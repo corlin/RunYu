@@ -6,7 +6,10 @@
 //  将转写结果插入到当前光标位置
 //
 
-import Cocoa
+import Foundation
+
+#if os(macOS)
+import AppKit
 
 class TextInserter {
     static let shared = TextInserter()
@@ -67,3 +70,9 @@ class TextInserter {
         }
     }
 }
+#else
+class TextInserter {
+    static let shared = TextInserter()
+    func insertText(_ text: String) {}
+}
+#endif

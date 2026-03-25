@@ -6,8 +6,11 @@
 //  监听 ⌥+V (Option+V) 切换语音输入状态
 //
 
-import Cocoa
+import SwiftUI
+
+#if os(macOS)
 import Carbon
+import AppKit
 
 class HotkeyManager {
     static let shared = HotkeyManager()
@@ -88,3 +91,12 @@ class HotkeyManager {
         return Unmanaged.passRetained(event)
     }
 }
+#else
+class HotkeyManager {
+    static let shared = HotkeyManager()
+    var onHotkeyPressed: (() -> Void)?
+    private init() {}
+    func register() {}
+    func unregister() {}
+}
+#endif

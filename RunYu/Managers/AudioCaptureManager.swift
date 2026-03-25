@@ -26,6 +26,12 @@ class AudioCaptureManager {
     func startCapture() throws {
         guard !isCapturing else { return }
         
+        #if os(iOS)
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.record, mode: .measurement, options: .duckOthers)
+        try session.setActive(true, options: .notifyOthersOnDeactivation)
+        #endif
+        
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         
@@ -51,6 +57,11 @@ class AudioCaptureManager {
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
         isCapturing = false
+        
+        #if os(iOS)
+        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        #endif
+        
         print("[RunYu] 🎤 音频采集已停止")
     }
     

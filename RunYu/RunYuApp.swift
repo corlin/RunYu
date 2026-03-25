@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct RunYuApp: App {
+    #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    #endif
     @StateObject private var viewModel = VoiceInputViewModel()
     
     var body: some Scene {
+        #if os(macOS)
         // 菜单栏常驻图标
         MenuBarExtra {
             MenuBarView(viewModel: viewModel)
@@ -25,11 +28,19 @@ struct RunYuApp: App {
         
         // 设置窗口
         Window("润语设置", id: "settings") {
-            SettingsView(viewModel: viewModel)
+            SettingsView()
         }
         .defaultSize(width: 500, height: 400)
+        #else
+        // iOS 主界面
+        WindowGroup {
+            iOSMainView()
+        }
+        #endif
     }
 }
+
+#if os(macOS)
 
 /// AppDelegate 处理全局热键注册和权限检查
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -48,3 +59,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         hotkeyManager?.unregister()
     }
 }
+#endif

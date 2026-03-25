@@ -6,8 +6,37 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		98242C912F73BD2B00157F68 /* RunYuKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 98242C8A2F73BD2B00157F68 /* RunYuKeyboard.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		98242C8F2F73BD2B00157F68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98242C2F2F739EDD00157F68 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 98242C892F73BD2B00157F68;
+			remoteInfo = RunYuKeyboard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		98242C962F73BD2B00157F68 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				98242C912F73BD2B00157F68 /* RunYuKeyboard.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		98242C372F739EDD00157F68 /* RunYu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunYu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98242C8A2F73BD2B00157F68 /* RunYuKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RunYuKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -18,6 +47,29 @@
 			);
 			target = 98242C362F739EDD00157F68 /* RunYu */;
 		};
+		98242C952F73BD2B00157F68 /* Exceptions for "RunYuKeyboard" folder in "RunYuKeyboard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 98242C892F73BD2B00157F68 /* RunYuKeyboard */;
+		};
+		98242C982F73BDFF00157F68 /* Exceptions for "RunYu" folder in "RunYuKeyboard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Managers/AudioCaptureManager.swift,
+				Managers/DictionaryManager.swift,
+				Managers/HotkeyManager.swift,
+				Managers/PermissionManager.swift,
+				Managers/SpeechRecognizer.swift,
+				Managers/TextInserter.swift,
+				Managers/TextPolisher.swift,
+				Managers/TranscriptionHistory.swift,
+				Managers/UserDefaultsManager.swift,
+				ViewModels/VoiceInputViewModel.swift,
+			);
+			target = 98242C892F73BD2B00157F68 /* RunYuKeyboard */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -25,14 +77,30 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				98242C852F73B89600157F68 /* Exceptions for "RunYu" folder in "RunYu" target */,
+				98242C982F73BDFF00157F68 /* Exceptions for "RunYu" folder in "RunYuKeyboard" target */,
 			);
 			path = RunYu;
+			sourceTree = "<group>";
+		};
+		98242C8B2F73BD2B00157F68 /* RunYuKeyboard */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				98242C952F73BD2B00157F68 /* Exceptions for "RunYuKeyboard" folder in "RunYuKeyboard" target */,
+			);
+			path = RunYuKeyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		98242C342F739EDD00157F68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98242C872F73BD2B00157F68 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				98242C392F739EDD00157F68 /* RunYu */,
+				98242C8B2F73BD2B00157F68 /* RunYuKeyboard */,
 				98242C382F739EDD00157F68 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				98242C372F739EDD00157F68 /* RunYu.app */,
+				98242C8A2F73BD2B00157F68 /* RunYuKeyboard.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,10 +138,12 @@
 				98242C332F739EDD00157F68 /* Sources */,
 				98242C342F739EDD00157F68 /* Frameworks */,
 				98242C352F739EDD00157F68 /* Resources */,
+				98242C962F73BD2B00157F68 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				98242C902F73BD2B00157F68 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				98242C392F739EDD00157F68 /* RunYu */,
@@ -82,6 +154,28 @@
 			productName = RunYu;
 			productReference = 98242C372F739EDD00157F68 /* RunYu.app */;
 			productType = "com.apple.product-type.application";
+		};
+		98242C892F73BD2B00157F68 /* RunYuKeyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98242C922F73BD2B00157F68 /* Build configuration list for PBXNativeTarget "RunYuKeyboard" */;
+			buildPhases = (
+				98242C862F73BD2B00157F68 /* Sources */,
+				98242C872F73BD2B00157F68 /* Frameworks */,
+				98242C882F73BD2B00157F68 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				98242C8B2F73BD2B00157F68 /* RunYuKeyboard */,
+			);
+			name = RunYuKeyboard;
+			packageProductDependencies = (
+			);
+			productName = RunYuKeyboard;
+			productReference = 98242C8A2F73BD2B00157F68 /* RunYuKeyboard.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -94,6 +188,9 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					98242C362F739EDD00157F68 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					98242C892F73BD2B00157F68 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -114,12 +211,20 @@
 			projectRoot = "";
 			targets = (
 				98242C362F739EDD00157F68 /* RunYu */,
+				98242C892F73BD2B00157F68 /* RunYuKeyboard */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		98242C352F739EDD00157F68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98242C882F73BD2B00157F68 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -136,7 +241,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		98242C862F73BD2B00157F68 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		98242C902F73BD2B00157F68 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 98242C892F73BD2B00157F68 /* RunYuKeyboard */;
+			targetProxy = 98242C8F2F73BD2B00157F68 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		98242C422F739EDF00157F68 /* Debug */ = {
@@ -357,6 +478,77 @@
 			};
 			name = Release;
 		};
+		98242C932F73BD2B00157F68 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RunYuKeyboard/RunYuKeyboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M726V7N7X;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RunYuKeyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RunYuKeyboard;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.corlin.RunYu.RunYuKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		98242C942F73BD2B00157F68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RunYuKeyboard/RunYuKeyboard.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5M726V7N7X;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RunYuKeyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RunYuKeyboard;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.corlin.RunYu.RunYuKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -374,6 +566,15 @@
 			buildConfigurations = (
 				98242C452F739EDF00157F68 /* Debug */,
 				98242C462F739EDF00157F68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98242C922F73BD2B00157F68 /* Build configuration list for PBXNativeTarget "RunYuKeyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98242C932F73BD2B00157F68 /* Debug */,
+				98242C942F73BD2B00157F68 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

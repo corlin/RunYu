@@ -73,8 +73,12 @@ struct HistoryView: View {
                                 
                                 // 复制按钮
                                 Button(action: {
+                                    #if os(macOS)
                                     NSPasteboard.general.clearContents()
                                     NSPasteboard.general.setString(record.polished, forType: .string)
+                                    #else
+                                    UIPasteboard.general.string = record.polished
+                                    #endif
                                 }) {
                                     Image(systemName: "doc.on.doc")
                                         .font(.caption)

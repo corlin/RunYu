@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(macOS)
 struct ContentView: View {
     @ObservedObject var viewModel: VoiceInputViewModel
     
@@ -107,7 +108,7 @@ struct ContentView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.red)
-                    .controlSize(.small)
+                    .contentShape(Rectangle()) // 确保整个区域可拖拽
                 }
                 
                 // 复制按钮
@@ -162,3 +163,4 @@ struct AudioWaveView: View {
         return base + CGFloat(Double(level) * variation) * (maxHeight - base)
     }
 }
+#endif

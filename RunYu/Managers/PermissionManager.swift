@@ -58,6 +58,7 @@ class PermissionManager {
         }
     }
     
+    #if os(macOS)
     /// 检查辅助功能权限（对于全局热键和文本插入）
     var isAccessibilityEnabled: Bool {
         AXIsProcessTrusted()
@@ -68,4 +69,9 @@ class PermissionManager {
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
         AXIsProcessTrustedWithOptions(options)
     }
+    #else
+    /// iOS 始终返回 true，因不需要辅助功能来全局注入
+    var isAccessibilityEnabled: Bool { true }
+    func promptAccessibilityPermission() {}
+    #endif
 }

@@ -70,12 +70,12 @@ class TranscriptionHistory: ObservableObject {
     
     private func saveRecords() {
         if let data = try? JSONEncoder().encode(records) {
-            UserDefaults.standard.set(data, forKey: storageKey)
+            UserDefaultsManager.shared.set(data, forKey: storageKey)
         }
     }
     
     private func loadRecords() {
-        if let data = UserDefaults.standard.data(forKey: storageKey),
+        if let data = UserDefaultsManager.shared.data(forKey: storageKey),
            let saved = try? JSONDecoder().decode([TranscriptionRecord].self, from: data) {
             records = saved
         }

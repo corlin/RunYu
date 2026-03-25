@@ -9,6 +9,10 @@
 import SwiftUI
 import Combine
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
 enum VoiceInputState {
     case idle        // 待机
     case listening   // 监听中
@@ -42,6 +46,9 @@ class VoiceInputViewModel: ObservableObject {
     
     private var durationTimer: Timer?
     private var cancellables = Set<AnyCancellable>()
+    
+    /// iOS 专用的文本插入回调（键盘扩展需要使用 proxy 插入，主 App 使用剪贴板）
+    var onInsertText: ((String) -> Void)?
     
     /// 语音停止指令关键词
     private let stopCommands = ["停止录入", "停止输入", "结束录入", "结束输入"]
@@ -143,8 +150,10 @@ class VoiceInputViewModel: ObservableObject {
         // 启动计时
         startDurationTimer()
         
+        #if os(macOS)
         // 播放开始提示音
         NSSound(named: "Tink")?.play()
+        #endif
     }
     
     /// 停止语音输入
@@ -163,7 +172,16 @@ class VoiceInputViewModel: ObservableObject {
         let finalText = currentTranscription
         if !finalText.isEmpty {
             polishedText = textPolisher.polish(finalText)
+            
+            #if os(macOS)
             textInserter.insertText(polishedText)
+            #else
+            if let handler = onInsertText {
+                handler(polishedText) // 交给 KeyboardViewController 插入
+            } else {
+                UIPasteboard.general.string = polishedText // 默认降级复制到剪贴板
+            }
+            #endif
             
             // 保存到历史记录
             history.addRecord(
@@ -177,6 +195,7 @@ class VoiceInputViewModel: ObservableObject {
             statusMessage = "未检测到语音"
         }
         
+        #if os(macOS)
         // 播放结束提示音
         NSSound(named: "Pop")?.play()
         
@@ -186,6 +205,12 @@ class VoiceInputViewModel: ObservableObject {
             self?.showFloatingPanel = false
             self?.statusMessage = "按 ⌥V 激活语音输入"
         }
+        #else
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.state = .idle
+            self?.statusMessage = "空闲"
+        }
+        #endif
     }
     
     // MARK: - Handlers
@@ -221,11 +246,18 @@ class VoiceInputViewModel: ObservableObject {
         audioCapture.stopCapture()
         stopDurationTimer()
         
+        #if os(macOS)
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
             self?.state = .idle
             self?.showFloatingPanel = false
             self?.statusMessage = "按 ⌥V 激活语音输入"
         }
+        #else
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+            self?.state = .idle
+            self?.statusMessage = "空闲"
+        }
+        #endif
     }
     
     // MARK: - Timer
